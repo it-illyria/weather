@@ -4,23 +4,57 @@
     <meta charset="UTF-8">
     <title>Weather Data</title>
     {% load static %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="{% static 'css/weather.css' %}">
+    <script src="{% static 'js/weather.js' %}"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 <body>
 <div class="container">
-    <h1>Weather Data</h1>
-    <ul class="weather-list">
-        {% for data in weather_data %}
-            <li class="weather-item">
-                <div class="weather-info">
-                    <strong>Timestamp:</strong> {{ data.timestamp }} <br>
-                    <strong>Current Temperature:</strong> {{ data.current_temp }} °C <br>
-                    <strong>Feels Like:</strong> {{ data.feels_like }} °C <br>
-                    <strong>Description:</strong> {{ data.weather_description }} <br>
+    <h1>Minute By Minute Weather</h1>
+    <div class="weather-container">
+        <div class="weather-list">
+            {% if weather_data %}
+                <!-- Most recent update -->
+                <div class="weather-item recent-update d-flex justify-content-between align-items-center">
+                    <!-- Current Temp and Feels Like -->
+                    <div class="weather-temp">
+                        <div class="weather-current-temp">
+                        <strong>{{ weather_data.0.current_temp }}°</strong>c <br>
+                        </div>
+                        <strong>Feels Like:</strong> {{ weather_data.0.feels_like }}°
+                    </div>
+                    <!-- Location and Date/Time -->
+                    <div class="weather-location text-center">
+                        <strong>Location: {{ weather_data.0.location_name }} ({{ weather_data.0.latitude }}, {{ weather_data.0.longitude }})</strong> <br>
+                        <strong>{{ weather_data.0.timestamp|date:"l, F j, Y H:i" }}</strong>
+                    </div>
+                    <!-- Image and Description -->
+                    <div class="weather-info text-right">
+                        <img src="https://openweathermap.org/img/wn/{{ weather_data.0.weather_icon }}.png" alt="weather icon"> <br>
+                        <span>{{ weather_data.0.weather_description }}</span>
+                    </div>
                 </div>
-            </li>
-        {% endfor %}
-    </ul>
+                <!-- Remaining updates -->
+                <div class="row">
+                    {% for data in weather_data|slice:"1:" %}
+                        <div class="col-md-2 weather-item">
+                            <div class="weather-info">
+                                <strong>{{ data.timestamp|date:"H:i" }}</strong> <br>
+                                <img src="https://openweathermap.org/img/wn/{{ data.weather_icon }}.png" alt="weather icon"> <br>
+                                <strong>{{ data.current_temp }}°</strong> <br>
+                                <span>{{ data.weather_description }}</span> <br>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p>No weather data available.</p>
+            {% endif %}
+        </div>
+    </div>
 </div>
 </body>
 </html>
