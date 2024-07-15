@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Weather Data</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/weather.css' %}">
+</head>
+<body>
+<div class="container">
+    <h1>Weather Data</h1>
+    <ul class="weather-list">
+        {% for data in weather_data %}
+            <li class="weather-item">
+                <div class="weather-info">
+                    <strong>Timestamp:</strong> {{ data.timestamp }} <br>
+                    <strong>Current Temperature:</strong> {{ data.current_temp }} °C <br>
+                    <strong>Feels Like:</strong> {{ data.feels_like }} °C <br>
+                    <strong>Description:</strong> {{ data.weather_description }} <br>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+</body>
+</html>

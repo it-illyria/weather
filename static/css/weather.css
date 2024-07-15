@@ -1,0 +1,46 @@
+.container {
+    width: 400px; /* Adjust width as needed */
+    margin: 50px auto; /* Center the container horizontally */
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.weather-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.weather-item {
+    margin-bottom: 15px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 15px;
+}
+
+.weather-info {
+    display: flex;
+    flex-wrap: wrap; /* Allow text to wrap if content overflows */
+    justify-content: space-between; /* Distribute items evenly */
+    margin: 0;
+    padding: 0;
+}
+
+.weather-info strong {
+    font-weight: bold;
+}
+
+/* Responsive design for smaller screens (optional) */
+@media (max-width: 768px) {
+    .container {
+        width: 90%;
+    }
+}
+
+
