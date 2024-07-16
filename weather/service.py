@@ -1,4 +1,5 @@
 import requests
+from geopy.geocoders import Nominatim
 
 from .models import WeatherData
 
@@ -18,3 +19,14 @@ def fetch_weather_data():
         feels_like=data['feels_like'],
         weather_description=data['weather_description']
     )
+
+
+def get_location_name(lat, lon):
+    # Initialize Nominatim geocoder
+    geolocator = Nominatim(user_agent="geoquiz_app")
+
+    # Construct location query
+    location = geolocator.reverse((lat, lon))
+
+    # Extract location name
+    return location.address
