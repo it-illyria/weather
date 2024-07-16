@@ -1,10 +1,8 @@
 from django.utils import timezone
-
 from django.shortcuts import render
-from geopy.geocoders import Nominatim
-
 from .models import WeatherData
 from .service import fetch_weather_data
+
 
 # weather description to SVG
 WEATHER_ICON_MAPPING = {
@@ -15,6 +13,7 @@ WEATHER_ICON_MAPPING = {
 }
 
 
+# Retrieve and display weather_data
 def weather_view(request):
     last_data = WeatherData.objects.order_by('-timestamp').first()
     if not last_data or (timezone.now() - last_data.timestamp).total_seconds() > 5 * 60:
@@ -22,7 +21,6 @@ def weather_view(request):
 
     weather_data = WeatherData.objects.order_by('-timestamp')[:13].values()
 
-    # Map icons to weather descriptions
     for data in weather_data:
         data['icon'] = WEATHER_ICON_MAPPING.get(data['weather_description'], 'default.svg')
     context = {

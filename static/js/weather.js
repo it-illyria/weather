@@ -12,9 +12,11 @@ function updateWeatherDisplay(data) {
         return;
     }
 
+    // Updates the most recently weather data
     const recentUpdate = weatherList.querySelector('.weather-item.recent-update');
     updateWeatherItem(recentUpdate, data[0]);
 
+    // Updates the historic of the Weather data from before
     const remainingItems = weatherList.querySelectorAll('.weather-item:not(.recent-update)');
     remainingItems.forEach((item, index) => {
         updateWeatherItem(item, data[index + 1]);

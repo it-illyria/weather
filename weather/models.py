@@ -1,6 +1,7 @@
 from django.db import models
 
 
+# Weather Data Model
 class WeatherData(models.Model):
     current_temp = models.FloatField()
     feels_like = models.FloatField()
