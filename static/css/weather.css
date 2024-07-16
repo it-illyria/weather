@@ -54,3 +54,8 @@
 .weather-current-temp {
     font-size: xxx-large;
 }
+
+.recent-weather-info img {
+    height: 100px;
+    width: 100px;
+}
