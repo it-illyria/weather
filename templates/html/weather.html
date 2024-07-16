@@ -11,24 +11,10 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <style>
-        .background-midnight {
-            background-image: url("{% static 'images/midnight.jpg' %}") !important;
-        }
-        .background-sunrise {
-            background-image: url("{% static 'images/sunrise.jpg' %}") !important;
-        }
-        .background-midday {
-            background-image: url("{% static 'images/midday.jpg' %}") !important;
-        }
-        .background-sunset {
-            background-image: url("{% static 'images/sunset.jpg' %}") !important;
-        }
-    </style>
 </head>
 <body>
 <div class="container">
-    <h1>Minute By Minute Weather</h1>
+    <h1>Every 5 Minutes Weather</h1>
     <div class="weather-container">
         <div class="weather-list">
             {% if weather_data %}
@@ -52,7 +38,7 @@
                     </div>
                     <!-- Location and Date/Time -->
                     <div class="weather-location text-center">
-                        <strong>Location:</strong> {{ weather_data.0.location_name }} <br>
+                        (Mutsu, Japan) <br>
                         <strong>{{ weather_data.0.timestamp|date:"l, F j, Y H:i" }}</strong>
                     </div>
                     <!-- Image and Description -->
