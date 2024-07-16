@@ -1,61 +1,74 @@
-.weather-container {
-    white-space: nowrap;
-}
-
-.weather-list {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
-.weather-item {
-    flex: 1 0 14%;
-    box-sizing: border-box;
-    text-align: center;
-    margin: 5px;
-    background-color: #f8f9fa;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    min-width: 50px;
+body {
+    background: url('../images/wallpaper.jpg') no-repeat center center fixed;
     background-size: cover;
-    background-position: center;
-    height: 222px;
+    color: white;
+    font-family: Arial, sans-serif;
+}
+
+.header h1 {
+    font-size: 3em;
+    font-weight: bold;
+    text-align: center;
+    color: #fff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    margin-bottom: 20px;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.weather-container {
+    background: rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    border-radius: 15px;
+}
+
+.current-weather {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid white;
+}
+
+.location-info h2,
+.location-info h3 {
+    margin: 0;
+}
+
+.main-weather-info {
+    text-align: center;
+}
+
+.main-weather-info h1 {
+    font-size: 4em;
+    margin: 0;
+}
+
+.additional-info {
+    text-align: right;
+}
+
+.forecast {
+    display: flex;
+    justify-content: space-between;
     padding: 20px;
 }
 
-.weather-info {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.forecast-item {
+    text-align: center;
 }
 
-.weather-info img {
+.forecast-item h4 {
+    margin: 10px 0 5px 0;
+}
+
+.forecast-item img {
     width: 50px;
     height: 50px;
 }
 
-.recent-update {
-    flex: 1 0 100%; /* Full width for the most recent update */
-    background-color: #e0e0e0;
-}
-
-@media (max-width: 768px) {
-    .weather-item {
-        flex: 1 0 45%; /* 2 items per row on smaller screens */
-    }
-}
-
-@media (max-width: 480px) {
-    .weather-item {
-        flex: 1 0 100%; /* 1 item per row on very small screens */
-    }
-}
-
-.weather-current-temp {
-    font-size: xxx-large;
-}
-
-.recent-weather-info img {
-    height: 100px;
-    width: 100px;
+.forecast-item p {
+    margin: 5px 0;
 }

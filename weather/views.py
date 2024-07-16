@@ -4,9 +4,9 @@ from django.shortcuts import render
 from geopy.geocoders import Nominatim
 
 from .models import WeatherData
-from .service import fetch_weather_data, get_location_name
+from .service import fetch_weather_data
 
-# Define weather description to SVG mapping
+# weather description to SVG
 WEATHER_ICON_MAPPING = {
     'clear sky': '1.svg',
     'broken clouds': '3.svg',
