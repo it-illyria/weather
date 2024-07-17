@@ -1,34 +1,79 @@
+// weather.js
+
 function refreshWeatherData() {
-    fetch('/weather/').then(response => response.json()).then(data => {
-            updateWeatherDisplay(data);
-    }).catch(error => {
+    fetch('/weather/')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.error) {
+                displayError(data.error);
+            } else {
+                updateWeatherDisplay(data);
+            }
+        })
+        .catch(error => {
             console.error('Error fetching weather data:', error);
-    });
+            displayError('Rate limit exceeded');
+        });
+}
+
+function displayError(errorMessage) {
+    const weatherList = document.querySelector('.weather-list');
+    weatherList.innerHTML = `<p class="error-message">${errorMessage}</p>`;
 }
 
 function updateWeatherDisplay(data) {
     const weatherList = document.querySelector('.weather-list');
+
+    // Clear existing weather data
+    weatherList.innerHTML = '';
+
     if (data.length === 0) {
+        weatherList.innerHTML = '<p>No weather data available.</p>';
         return;
     }
 
-    // Updates the most recently weather data
-    const recentUpdate = weatherList.querySelector('.weather-item.recent-update');
-    updateWeatherItem(recentUpdate, data[0]);
+    // Most recent update
+    const recentUpdate = createWeatherItem(data[0], true);
+    weatherList.appendChild(recentUpdate);
 
-    // Updates the historic of the Weather data from before
-    const remainingItems = weatherList.querySelectorAll('.weather-item:not(.recent-update)');
-    remainingItems.forEach((item, index) => {
-        updateWeatherItem(item, data[index + 1]);
+    // Historic updates
+    data.slice(1).forEach(weatherData => {
+        const historicItem = createWeatherItem(weatherData, false);
+        weatherList.appendChild(historicItem);
     });
 }
 
-function updateWeatherItem(weatherItemElement, weatherData) {
-  weatherItemElement.querySelector('.weather-location span').textContent = `${new Date(weatherData.timestamp).toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric' })}`;
-  weatherItemElement.querySelector('.weather-current-temp strong').textContent = `${weatherData.current_temp}°C`;
+function createWeatherItem(weatherData, isRecent) {
+    const weatherItem = document.createElement('div');
+    weatherItem.classList.add('weather-item');
+    if (isRecent) {
+        weatherItem.classList.add('recent-update');
+    }
+
+    // Update HTML content for each weather item
+    weatherItem.innerHTML = `
+        <div class="location-info">
+            <p>${new Date(weatherData.timestamp_full).toLocaleString()}</p>
+            <p>Tirana, Albania</p>
+        </div>
+        <div class="main-weather-info">
+            <img src="{% static 'images/' %}${weatherData.icon}" alt="weather icon">
+            <h2>${weatherData.current_temp} °C</h2>
+            <h4 class="feels-like">Feels Like: ${weatherData.feels_like}°</h4>
+            <h4 class="description">${weatherData.weather_description}</h4>
+        </div>
+    `;
+
+    return weatherItem;
 }
 
+// Initial data fetch
 refreshWeatherData();
 
-// Refresh every 5 minutes (adjust as needed)
+// Refresh every 5 minutes
 setInterval(refreshWeatherData, 5 * 60 * 1000);

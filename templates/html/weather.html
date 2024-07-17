@@ -1,3 +1,4 @@
+<!-- weather.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,29 +11,33 @@
 <body>
 <div class="container">
     <h1>Every 5 Minutes Weather</h1>
-    <div class="weather-container">
+    <div id="weather-container" class="weather-container">
         <div class="weather-list">
+            <!-- Error message display -->
+            <div class="error-message"></div>
+
+            <!-- Display weather data -->
             {% if weather_data %}
                 <!-- Most recent update -->
                 <div class="additional-info">
-                    <p>{{ weather_data.0.timestamp|date:"l, F j, Y H:i" }}</p>
-                    <p>Mutsu, Japan</p>
+                    <p>{{ weather_data.0.timestamp_full }}</p>
+                    <p>Tirana, Albania</p>
                 </div>
-                <div class="current-weather">
+                <div class="current-weather weather-item recent-update">
                     <div class="location-info"></div>
                     <div class="main-weather-info">
                         <img src="{% static 'images/' %}{{ weather_data.0.icon }}" alt="weather icon">
                         <h2>{{ weather_data.0.current_temp }} °C</h2>
-                        <h4>Feels Like: {{ weather_data.0.feels_like }}°</h4>
-                        <h4>{{ weather_data.0.weather_description }}</h4>
+                        <h4 class="feels-like">Feels Like: {{ weather_data.0.feels_like }}°</h4>
+                        <h4 class="description">{{ weather_data.0.weather_description }}</h4>
                     </div>
                     <div class="additional-info"></div>
                 </div>
                 <!-- Historic updates -->
                 <div class="forecast">
                     {% for data in weather_data|slice:"1:" %}
-                        <div class="forecast-item">
-                            <h4>{{ data.timestamp|date:"H:i" }}</h4>
+                        <div class="forecast-item weather-item">
+                            <h4>{{ data.timestamp_short }}</h4>
                             <img src="{% static 'images/' %}{{ data.icon }}" alt="weather icon">
                             <p>{{ data.current_temp }}°C</p>
                         </div>
