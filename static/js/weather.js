@@ -24,9 +24,10 @@ function updateWeatherDisplay(data) {
 }
 
 function updateWeatherItem(weatherItemElement, weatherData) {
-    weatherItemElement.querySelector('.weather-location span').textContent = `${weatherData.timestamp | date:"l, F j, Y H:i"}`;
-    weatherItemElement.querySelector('.weather-current-temp strong').textContent = `${weatherData.current_temp}°c`;
+  weatherItemElement.querySelector('.weather-location span').textContent = `${new Date(weatherData.timestamp).toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric' })}`;
+  weatherItemElement.querySelector('.weather-current-temp strong').textContent = `${weatherData.current_temp}°C`;
 }
+
 refreshWeatherData();
 
 // Refresh every 5 minutes (adjust as needed)
