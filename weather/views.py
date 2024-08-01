@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 from django.shortcuts import render
 from django.utils import timezone
 
@@ -5,7 +6,6 @@ from .models import WeatherData
 from .serializers import WeatherDataSerializer
 from .service import fetch_weather_data
 
-# weather description to SVG
 WEATHER_ICON_MAPPING = {
     'clear sky': '1.svg',
     'broken clouds': '3.svg',
@@ -15,11 +15,14 @@ WEATHER_ICON_MAPPING = {
 }
 
 
-# Retrieve and display weather_data
 def weather_view(request):
-    last_data = WeatherData.objects.latest('timestamp')
+    last_data = WeatherData.objects.latest('timestamp') if WeatherData.objects.exists() else None
+    error_message = None
+
     if not last_data or (timezone.now() - last_data.timestamp).total_seconds() > 5 * 60:
-        fetch_weather_data()
+        response = fetch_weather_data()
+        if isinstance(response, JsonResponse):
+            error_message = response.json().get('error')
 
     weather_data = WeatherData.objects.order_by('-timestamp')[:13].values()
     serializer = WeatherDataSerializer(weather_data, many=True)
@@ -30,6 +33,7 @@ def weather_view(request):
 
     context = {
         'weather_data': sliced_weather_data,
+        'error_message': error_message,
     }
 
     return render(request, 'html/weather.html', context)

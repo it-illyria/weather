@@ -64,8 +64,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'weather_backend',
-        'USER': 'user',
-        'PASSWORD': 'password',
+        'USER': 'postgres',
+        'PASSWORD': 'apache',
         'HOST': 'localhost',
         'PORT': '5432',
     }
@@ -110,3 +110,6 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
+
+OPENWEATHERMAP_API_KEY = os.getenv('57b0f32a9d1e57fd19ac96c8eb3b0e71')
+

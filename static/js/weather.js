@@ -1,7 +1,5 @@
-// weather.js
-
 function refreshWeatherData() {
-    fetch('/weather/')
+    fetch('')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -15,10 +13,7 @@ function refreshWeatherData() {
                 updateWeatherDisplay(data);
             }
         })
-        .catch(error => {
-            console.error('Error fetching weather data:', error);
-            displayError('Rate limit exceeded');
-        });
+
 }
 
 function displayError(errorMessage) {

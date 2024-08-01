@@ -12,10 +12,7 @@ class Command(BaseCommand):
     # Handles the fetched WeatherData and store DB every 5 minutes
     def handle(self, *args, **kwargs):
         def job():
-            try:
-                fetch_weather_data()
-            except Exception as e:
-                logger.error(f"Failed to fetch weather data: {e}")
+            fetch_weather_data()
 
         schedule.every(5).minutes.do(job)
 
